@@ -31,7 +31,9 @@ export default class Login extends Component<{}> {
     constructor(props) {
         super(props);
         this.state = {
-            flagfoot:true
+            flagfoot:true,
+            username:'',
+            password:'',
         }
     }
 
@@ -43,32 +45,42 @@ export default class Login extends Component<{}> {
                        source={require('./img/icon.png')}
                />
                 <TextInput style={styles.userinput}
+                           ref="username"
                            underlineColorAndroid="transparent"
                             keyboardType={'numeric'}
                            onFocus={
                                ()=>this.statechange()
                            }
                            onSubmitEditing={
-                               ()=>this.setState({
-                                   flagfoot:true
+                               ()=>this.statechangetrue()
+                           }
+                           onChangeText={
+                               (value)=>this.setState({
+                                   username:value
                                })
                            }
 
                 />
                 <TextInput style={styles.pwdinput}
+                           ref="pwdvalue"
                            underlineColorAndroid="transparent"
                            secureTextEntry={true}
                            onFocus={
                                ()=>this.statechange()
                            }
                            onSubmitEditing={
-                               ()=>this.setState({
-                                   flagfoot:true
+                               ()=>this.statechangetrue()
+                           }
+                           onChangeText={
+                               (value)=>this.setState({
+                                   password:value
                                })
                            }
                 />
-                <TouchableNativeFeedback>
-                <View style={styles.loginbox}>
+                <TouchableNativeFeedback
+                    onPress={()=>this.getinputvalue()}
+                >
+                <View style={styles.loginbox} >
                     <Text style={styles.qqlogin}>登陆</Text>
                 </View>
                 </TouchableNativeFeedback>
@@ -87,11 +99,24 @@ export default class Login extends Component<{}> {
         );
     }
     statechange(){
-        this.setState({
-           flagfoot:false
-        })
+            this.setState({
+                flagfoot:false
+            })
     };
+    statechangetrue(){
+        var that=this;
+        setTimeout(function () {
+            that.setState({
+                flagfoot:true
+            })
+        },500)
 
+    }
+  getinputvalue(){
+      var username=this.state.username;
+      var pwd=this.state.password;
+      alert('用户名是：'+username+'密码是：'+pwd)
+  }
 }
 
 const styles = StyleSheet.create({
